@@ -4,7 +4,7 @@ Pipeline de dados do CSV ao dashboard sobre **99 mil pedidos reais** do e-commer
 brasileiro (2016–2018): ingestão, transformação com tipos e chaves conferidos,
 indicadores em SQL, painel em Streamlit, relatório HTML e testes automatizados.
 
-**Painel online:** _(link da Streamlit Cloud aqui)_
+**Painel online:** https://olist-emmanuel.streamlit.app
 
 Projeto construído no curso prático *Pipeline Olist em 4 aulas*, com
 spec-driven development: cada etapa começa por uma spec escrita, com as

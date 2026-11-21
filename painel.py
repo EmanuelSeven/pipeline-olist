@@ -113,14 +113,14 @@ def cartoes(d: dict[str, pd.DataFrame]) -> list[tuple[str, str]]:
     um_pedido = d["recompra"].loc[d["recompra"]["pedidos_por_cliente"] == 1, "pct_clientes"].iloc[0]
     prazo = d["entrega_no_prazo"].iloc[0]["pct_no_prazo"]
     return [
-        ("Ticket médio · receita por pedido válido", reais(k["ticket_medio"])),
-        ("Cancelados · % de todos os pedidos", pct(k["pct_cancelados"], 2)),
-        ("Peso do frete · % do que o cliente pagou", pct(k["pct_frete"], 1)),
+        ("Ticket médio · por pedido", reais(k["ticket_medio"])),
+        ("Cancelados · % dos pedidos", pct(k["pct_cancelados"], 2)),
+        ("Peso do frete · % do pago", pct(k["pct_frete"], 1)),
         # Exceção escrita na spec: o mart 05 guarda quem comprou uma vez.
-        ("Recompra · % de pessoas com 2+ pedidos", pct(100 - float(um_pedido), 2)),
-        ("No prazo · % dos entregues", pct(prazo, 1)),
-        ("Dias até entregar · média, compra → entrega", numero(k["dias_entrega"], 1)),
-        ("Nota média · todas as avaliações", numero(k["nota_media"], 2)),
+        ("Recompra · 2+ pedidos", pct(100 - float(um_pedido), 2)),
+        ("No prazo · % entregues", pct(prazo, 1)),
+        ("Dias até entregar · média", numero(k["dias_entrega"], 1)),
+        ("Nota média · 1 a 5", numero(k["nota_media"], 2)),
     ]
 
 
