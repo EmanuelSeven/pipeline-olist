@@ -43,6 +43,7 @@ MARTS = [
     "vendas_mensais", "top_categorias", "entrega_no_prazo", "nota_por_categoria",
     "recompra", "ticket_medio_por_estado", "mix_pagamento", "nota_por_prazo",
     "vendedores_pareto", "tempo_entrega_por_estado", "kpis", "clientes_por_uf",
+    "tabelas_por_camada", "camadas",
 ]
 
 COR = "#2563eb"
@@ -223,3 +224,59 @@ def grafico_pareto(pareto: pd.DataFrame) -> go.Figure:
     fig.update_xaxes(title="Vendedores, do maior para o menor", tickformat=",.0f")
     fig.update_yaxes(title="% acumulado da receita")
     return _estilo(fig, "09 · Concentração de vendedores")
+
+
+# ---------- Página "Como foi feito" ----------
+
+NOMES_CAMADA = {
+    "raw": "Raw · dado bruto",
+    "refined": "Refined · dado confiável",
+    "marts": "Marts · indicadores",
+}
+
+DESCRICAO_CAMADA = {
+    "raw": "Espelho fiel dos 9 CSVs: tudo como texto, nenhuma linha alterada.",
+    "refined": "Tipos certos (data, dinheiro, inteiro), chaves conferidas, nulos mantidos.",
+    "marts": "Uma tabela por pergunta de negócio, escrita em SQL. O painel só lê daqui.",
+}
+
+DIAGRAMA = """
+digraph {
+  rankdir=LR; bgcolor="transparent";
+  node [shape=box, style="rounded,filled", fontname="sans-serif", fontsize=12,
+        color="#2563eb", fillcolor="#eff6ff"];
+  edge [color="#64748b", fontname="sans-serif", fontsize=10];
+  csv [label="9 arquivos CSV", fillcolor="#f1f5f9", color="#64748b"];
+  raw [label="raw"]; refined [label="refined"]; marts [label="marts"];
+  painel [label="painel", fillcolor="#fff7ed", color="#ea580c"];
+  csv -> raw [label="ingestão"];
+  raw -> refined [label="transformação"];
+  refined -> marts [label="SQL"];
+  marts -> painel [label="só leitura"];
+}
+"""
+
+DECISOES = [
+    "**Raw não muda nada**: tudo entra como texto. Um CEP como 01310 viraria 1310 se fosse lido como número.",
+    "**Nulo continua nulo**: 2.965 pedidos sem data de entrega são, quase todos, pedidos a caminho ou cancelados.",
+    "**Conversão que falha para tudo**: valor que não vira data ou número encerra o pipeline, em vez de virar nulo calado.",
+    "**Cópia exata sai, conflito para**: chave repetida com conteúdo diferente encerra, para ninguém escolher no escuro.",
+    "**Painel sem cálculo**: todo número da tela sai pronto de um arquivo SQL em sql/marts/.",
+]
+
+
+def cartoes_camadas(d: dict[str, pd.DataFrame]) -> list[tuple[str, str, str]]:
+    """(nome da camada, registros formatados, legenda), na ordem do pipeline."""
+    df = d["camadas"].sort_values("ordem")
+    return [
+        (NOMES_CAMADA.get(c, c), numero(r), f"{numero(t)} tabelas · {DESCRICAO_CAMADA.get(c, '')}")
+        for c, r, t in zip(df["camada"], df["registros"], df["tabelas"])
+    ]
+
+
+def tabelas_da_camada(d: dict[str, pd.DataFrame], camada: str) -> pd.DataFrame:
+    """Só filtra, ordena, renomeia e formata — nenhum cálculo."""
+    df = d["tabelas_por_camada"]
+    df = df[df["camada"] == camada].sort_values("linhas", ascending=False)
+    return pd.DataFrame({"Tabela": df["tabela"].to_list(),
+                         "Registros": [numero(n) for n in df["linhas"]]})

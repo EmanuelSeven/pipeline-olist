@@ -88,3 +88,27 @@ def test_ler_sem_banco_ou_sem_mart_avisa_quais_faltam(tmp_path):
     duckdb.connect(str(caminho)).close()
     with pytest.raises(painel.MartsFaltando, match="kpis"):
         painel.ler(["kpis"], caminho)
+
+
+def camadas_inventadas():
+    # duas camadas, fora de ordem de propósito: a função tem que ordenar por "ordem"
+    return {
+        "camadas": pd.DataFrame({"ordem": [2, 1], "camada": ["refined", "raw"],
+                                 "tabelas": [1, 2], "registros": [10, 1500]}),
+        "tabelas_por_camada": pd.DataFrame({
+            "ordem": [1, 1, 2], "camada": ["raw", "raw", "refined"],
+            "tabela": ["pequena", "grande", "pedidos"], "linhas": [500, 1000, 10]}),
+    }
+
+
+def test_cartoes_das_camadas_seguem_a_ordem_do_pipeline():
+    cartoes = painel.cartoes_camadas(camadas_inventadas())
+    assert [c[0] for c in cartoes] == ["Raw · dado bruto", "Refined · dado confiável"]
+    assert cartoes[0][1] == "1.500"
+    assert cartoes[0][2].startswith("2 tabelas")
+
+
+def test_tabelas_da_camada_filtra_e_ordena_pela_maior():
+    tabela = painel.tabelas_da_camada(camadas_inventadas(), "raw")
+    assert list(tabela["Tabela"]) == ["grande", "pequena"]
+    assert list(tabela["Registros"]) == ["1.000", "500"]
