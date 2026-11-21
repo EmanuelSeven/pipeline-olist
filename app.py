@@ -12,9 +12,30 @@ import painel
 st.set_page_config(page_title="Olist · Operação e Logística", layout="wide")
 
 
+@st.cache_resource(show_spinner=False)
+def garantir_banco() -> None:
+    """Sem olist.duckdb (ex.: na Streamlit Cloud, onde o banco não vai para o git),
+    roda o pipeline do zero a partir de raw/: ingestão -> transformação -> marts.
+    O painel continua só lendo marts; quem calcula é o pipeline."""
+    if painel.CAMINHO_BANCO.is_file():
+        return
+    from pipeline import ingestao, marts, transformacao
+
+    with st.spinner("Primeira abertura: construindo o banco a partir dos CSVs (raw → refined → marts)..."):
+        for etapa in (ingestao, transformacao, marts):
+            try:
+                etapa.main()
+            except SystemExit:
+                st.error(f"O pipeline parou na etapa {etapa.__name__}. Veja o log do servidor.")
+                st.stop()
+
+
 @st.cache_data
 def carregar() -> dict[str, pd.DataFrame]:
     return painel.ler()
+
+
+garantir_banco()
 
 
 try:
