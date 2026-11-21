@@ -1,5 +1,5 @@
--- Pergunta: que fração dos vendedores faz 80% da receita?
 -- Grão do resultado: um vendedor com venda válida.
+-- Pergunta: que fração dos vendedores faz 80% da receita?
 -- Desempate por vendedor_id na janela: sem ele, receitas iguais ganham o mesmo
 -- acumulado e a ordem muda de uma execução para outra.
 WITH receita_vendedor AS (     -- grão: um vendedor

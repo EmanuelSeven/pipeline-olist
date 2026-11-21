@@ -1,5 +1,5 @@
--- Pergunta: que nota cada categoria recebe?
 -- Grão do resultado: uma categoria com 100 pedidos avaliados ou mais.
+-- Pergunta: que nota cada categoria recebe?
 -- A nota é do pedido e a categoria é do item: o grão é ajustado ANTES de juntar.
 WITH nota_pedido AS (        -- grão: um pedido (média das avaliações do pedido; 547 têm mais de uma)
     SELECT pedido_id, avg(nota) AS nota

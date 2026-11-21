@@ -1,5 +1,5 @@
--- Pergunta: quanto chegou no prazo?
 -- Grão do resultado: a operação inteira, uma linha.
+-- Pergunta: quanto chegou no prazo?
 -- Denominador: pedidos delivered COM data de entrega (os 8 sem data ficam fora).
 -- data_entrega é TIMESTAMP e data_entrega_prevista é DATE: o ::DATE é obrigatório,
 -- senão a entrega às 15h do dia previsto vira atraso (93,2% cairia para 91,9%).

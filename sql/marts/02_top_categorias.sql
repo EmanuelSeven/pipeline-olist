@@ -1,5 +1,5 @@
--- Pergunta: quais categorias mais vendem?
 -- Grão do resultado: uma categoria.
+-- Pergunta: quais categorias mais vendem?
 -- Grão do JOIN: um item. LEFT JOIN na tradução e no produto sem categoria:
 -- sem eles, R$ 183.813,13 somem sem aviso.
 -- ATENÇÃO: a coluna pedidos NÃO soma — um pedido com itens de duas categorias

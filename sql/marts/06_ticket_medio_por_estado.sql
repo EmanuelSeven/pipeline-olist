@@ -1,5 +1,5 @@
--- Pergunta: qual o ticket médio por estado?
 -- Grão do resultado: uma UF do cliente.
+-- Pergunta: qual o ticket médio por estado?
 -- Ticket médio = receita de cada pedido válido somada primeiro, média por pedido depois.
 WITH receita_pedido AS (      -- grão: um pedido válido com item
     SELECT p.pedido_id, p.cliente_id, sum(i.preco) AS receita

@@ -1,5 +1,5 @@
--- Pergunta: quanto vendemos por mês?
 -- Grão do resultado: um mês de compra.
+-- Pergunta: quanto vendemos por mês?
 -- Pedido válido = status NOT IN ('canceled','unavailable'). Receita = sum(preco), sem frete.
 -- O JOIN com itens muda o grão de pedido para item: pedidos se contam com count(DISTINCT).
 -- 8 pedidos válidos sem nenhum item ficam fora (não venderam nada): 98.199, não 98.207.

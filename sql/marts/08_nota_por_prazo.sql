@@ -1,5 +1,5 @@
--- Pergunta: o atraso derruba a nota?
 -- Grão do resultado: uma situação de entrega ('no_prazo' ou 'atrasado').
+-- Pergunta: o atraso derruba a nota?
 -- Mesmo denominador do mart 03 (delivered com data de entrega), com o ::DATE.
 WITH nota_pedido AS (          -- grão: um pedido (média das avaliações dele)
     SELECT pedido_id, avg(nota) AS nota

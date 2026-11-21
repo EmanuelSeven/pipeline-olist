@@ -1,5 +1,5 @@
--- Pergunta: quantos clientes voltaram a comprar?
 -- Grão do resultado: um número de pedidos por cliente (1, 2, 3...).
+-- Pergunta: quantos clientes voltaram a comprar?
 -- Cliente = a pessoa (cliente_unico_id), nunca cliente_id (que muda a cada pedido).
 WITH pedidos_por_pessoa AS (  -- grão: uma pessoa com pedido válido
     SELECT c.cliente_unico_id, count(*) AS pedidos

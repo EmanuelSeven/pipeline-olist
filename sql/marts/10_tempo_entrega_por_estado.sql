@@ -1,5 +1,5 @@
--- Pergunta: quantos dias da compra até a entrega, por UF do cliente?
 -- Grão do resultado: uma UF do cliente.
+-- Pergunta: quantos dias da compra até a entrega, por UF do cliente?
 -- Mesmo denominador do mart 03. Parte de data_compra (o tempo da loja),
 -- não de data_envio (que seria o tempo da transportadora).
 WITH dias_pedido AS (          -- grão: um pedido entregue

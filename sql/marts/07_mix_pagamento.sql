@@ -1,5 +1,5 @@
--- Pergunta: quanto do dinheiro pago entra por cada forma de pagamento?
 -- Grão do resultado: um tipo de pagamento. Grão da fonte: um pagamento (pedido_id, pagamento_seq).
+-- Pergunta: quanto do dinheiro pago entra por cada forma de pagamento?
 -- valor soma 15.739.137,01, mais que a receita do mart 01 (13.494.400,74): o pagamento
 -- inclui o FRETE e os juros de parcelamento; a receita é só sum(preco).
 -- A soma de pedidos passa dos 98.206 válidos com pagamento: um pedido pago com cartão

@@ -1,5 +1,5 @@
--- Pergunta: os números dos cartões do painel.
 -- Grão do resultado: a operação inteira, uma linha.
+-- Pergunta: os números dos cartões do painel.
 -- Cada CTE tem UMA linha; o SELECT final junta com vírgula (sem ON): 1 x 1 x 1 = 1.
 -- Se alguma CTE voltar com duas linhas, o mart dobra calado — cada uma agrega tudo.
 WITH receita_pedido AS (      -- grão: um pedido válido com item

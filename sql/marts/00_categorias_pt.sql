@@ -1,5 +1,5 @@
--- Pergunta: como cada categoria aparece na tela, em português com acento?
 -- Grão do resultado: uma categoria original da Olist (refined.produtos.categoria).
+-- Pergunta: como cada categoria aparece na tela, em português com acento?
 -- Só rótulo de tela, escrito à mão a partir do nome original (que vem sem acento).
 -- Roda antes dos outros marts (prefixo 00): 02 e 04 fazem LEFT JOIN nele.
 -- Produto sem categoria vira 'Sem categoria' nos marts que usam esta tabela.
