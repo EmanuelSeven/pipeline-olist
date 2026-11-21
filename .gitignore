@@ -1,0 +1,22 @@
+# Banco gerado pelo pipeline (104 MB — o GitHub recusa acima de 100 MB).
+# Ele é reconstruído do zero a partir de raw/ com os três comandos do README.
+*.duckdb
+*.duckdb.wal
+
+# Ambiente e caches do Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Saídas geradas
+relatorio.html
+export/
+
+# Configuração local de ferramentas
+.vscode/
+.DS_Store
+Thumbs.db
