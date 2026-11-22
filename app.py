@@ -7,6 +7,7 @@ Spec: docstring de painel.py (seção 3, layout; seção 5, filtro; seção 6, c
 import pandas as pd
 import streamlit as st
 
+import acessos
 import painel
 
 st.set_page_config(page_title="Olist · Operação e Logística do E-commerce",layout="wide")
@@ -118,8 +119,36 @@ def pagina_como_foi_feito() -> None:
     )
 
 
+def segredo(nome: str) -> str | None:
+    """Secrets do Streamlit; sem secrets.toml (rodando local), cai nas variáveis de ambiente."""
+    try:
+        return st.secrets.get(nome)
+    except FileNotFoundError:
+        return None
+
+
+def total_de_acessos() -> int | None:
+    """Conta uma vez por sessão do navegador: rerun, filtro e troca de página não contam
+    de novo. O resultado (inclusive None, em falha) fica guardado para não repetir a requisição."""
+    if "acessos" not in st.session_state:
+        st.session_state["acessos"] = acessos.registrar_acesso(
+            segredo("OLIST_SUPABASE_URL"), segredo("OLIST_SUPABASE_KEY")
+        )
+    return st.session_state["acessos"]
+
+
+def rodape() -> None:
+    texto = "Dados: Olist (Kaggle), pedidos de 2016 a 2018"
+    total = total_de_acessos()
+    if total is not None:
+        texto += f" · 👁️ {painel.numero(total)} acessos"
+    st.divider()
+    st.caption(texto)
+
+
 st.navigation(
     [st.Page(pagina_painel, title="Painel", default=True),
      st.Page(pagina_como_foi_feito, title="Como foi feito", url_path="como-foi-feito")],
     position="top",
 ).run()
+rodape()

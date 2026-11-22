@@ -16,6 +16,10 @@ htmlcov/
 relatorio.html
 export/
 
+# Segredos (chave do Supabase do contador de acessos)
+.streamlit/secrets.toml
+.env
+
 # Configuração local de ferramentas
 .vscode/
 .DS_Store
