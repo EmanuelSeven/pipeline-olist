@@ -226,7 +226,7 @@ def grafico_pareto(pareto: pd.DataFrame) -> go.Figure:
     return _estilo(fig, "09 · Concentração de vendedores")
 
 
-# ---------- Página "Como foi feito" ----------
+# ---------- Página "Arquitetura" ----------
 
 NOMES_CAMADA = {
     "raw": "Raw · dado bruto",

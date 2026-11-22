@@ -93,8 +93,8 @@ def pagina_painel() -> None:
     c3.plotly_chart(painel.grafico_pareto(dados["vendedores_pareto"]), width="stretch")
 
 
-def pagina_como_foi_feito() -> None:
-    st.title("COMO FOI FEITO")
+def pagina_arquitetura() -> None:
+    st.title("Arquitetura")
     st.subheader("DO CSV AO PAINEL, EM TRÊS CAMADAS")
     st.graphviz_chart(painel.DIAGRAMA)
 
@@ -148,7 +148,7 @@ def rodape() -> None:
 
 st.navigation(
     [st.Page(pagina_painel, title="Painel", default=True),
-     st.Page(pagina_como_foi_feito, title="Como foi feito", url_path="como-foi-feito")],
+     st.Page(pagina_arquitetura, title="Arquitetura", url_path="arquitetura")],
     position="top",
 ).run()
 rodape()
