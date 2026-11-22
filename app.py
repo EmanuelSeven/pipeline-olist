@@ -9,7 +9,7 @@ import streamlit as st
 
 import painel
 
-st.set_page_config(page_title="Olist · Operação e Logística", layout="wide")
+st.set_page_config(page_title="Olist · Operação e Logística do E-commerce",layout="wide")
 
 
 @st.cache_resource(show_spinner=False)
