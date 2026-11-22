@@ -13,14 +13,17 @@ import painel
 st.set_page_config(page_title="Olist · Operação e Logística do E-commerce",layout="wide")
 
 
+# Os dois caches recebem a lista de marts como argumento: um mart novo em painel.MARTS
+# muda a chave do cache, então o servidor confere o banco e lê de novo, em vez de
+# entregar o dicionário antigo (sem o mart novo -> KeyError na tela).
 @st.cache_resource(show_spinner=False)
-def garantir_banco() -> None:
+def garantir_banco(marts: tuple[str, ...]) -> None:
     """Sem olist.duckdb, ou com algum mart faltando (ex.: na Streamlit Cloud, onde o
     banco não vai para o git, ou depois de um mart novo), roda o pipeline do zero a
     partir de raw/: ingestão -> transformação -> marts.
     O painel continua só lendo marts; quem calcula é o pipeline."""
     try:
-        painel.ler()
+        painel.ler(list(marts))
         return
     except painel.MartsFaltando:
         pass
@@ -36,15 +39,16 @@ def garantir_banco() -> None:
 
 
 @st.cache_data
-def carregar() -> dict[str, pd.DataFrame]:
-    return painel.ler()
+def carregar(marts: tuple[str, ...]) -> dict[str, pd.DataFrame]:
+    return painel.ler(list(marts))
 
 
-garantir_banco()
+MARTS = tuple(painel.MARTS)
+garantir_banco(MARTS)
 
 
 try:
-    dados = carregar()
+    dados = carregar(MARTS)
 except painel.MartsFaltando as erro:
     st.error(f"{erro}\n\nRode: `uv run python -m pipeline.marts`")
     st.stop()
@@ -95,7 +99,7 @@ def pagina_painel() -> None:
 
 def pagina_arquitetura() -> None:
     st.title("Arquitetura")
-    st.subheader("DO CSV AO PAINEL, EM TRÊS CAMADAS")
+    st.subheader("Do CSV ao painel, em três camadas")
     st.graphviz_chart(painel.DIAGRAMA)
 
     for coluna, (nome, registros, legenda) in zip(st.columns(3), painel.cartoes_camadas(dados)):
