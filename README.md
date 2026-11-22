@@ -1,8 +1,6 @@
-# Olist · Operação e Logística do E-commerce
+# OLIST · OPERAÇÃO E LOGÍSTICA DO E-COMMERCE
 
-Pipeline de dados do CSV ao dashboard sobre **99 mil pedidos reais** do e-commerce
-brasileiro (2016–2018): ingestão, transformação com tipos e chaves conferidos,
-indicadores em SQL, painel em Streamlit, relatório HTML e testes automatizados.
+Pipeline de dados do CSV ao dashboard sobre 99 mil pedidos reais do e-commerce brasileiro (2016–2018): ingestão, transformação com tipos e chaves conferidos, indicadores em SQL, painel em Streamlit, relatório HTML e testes automatizados.
 
 **Painel online:** https://olist-emmanuel.streamlit.app
 
